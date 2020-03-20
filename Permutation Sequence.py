@@ -8,7 +8,7 @@ def permutationSequence(n, k):
     print(numbers)
     while n>0:
         n-=1
-        print(n)
+        # print(n)
         index, k = divmod(k, math.factorial(n))
         permutation += str(numbers[index])
         # remove used number
