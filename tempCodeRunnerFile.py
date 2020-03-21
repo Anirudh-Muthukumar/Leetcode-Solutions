@@ -1,2 +1,0 @@
-print(matrix)
-    # maxSquare(matrix)
