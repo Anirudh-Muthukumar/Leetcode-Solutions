@@ -9,7 +9,7 @@ class Solution:
         n = len(A)
    
         for i in range(n):
-            while 0<A[i]<=n and A[A[i]-1]!=A[i]:
+            while 1<=A[i]<=n and A[A[i]-1]!=A[i]:
                 ind1, ind2 = i, A[i]-1
                 A[ind1], A[ind2] = A[ind2], A[ind1]
                 

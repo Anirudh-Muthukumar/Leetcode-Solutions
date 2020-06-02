@@ -1,31 +1,35 @@
 class Solution:
-    def fourSum(self, nums, target):
-        self.ct = 10
-        def findNSum(l, r, target, N, result, results):
+    def fourSum(self, A, target):
+        
+        def findNSum(l, r, N, target, result, results):
             
-            if r-l+1 < N or N < 2 or target < nums[l]*N or target > nums[r]*N:  # early termination
+            if N<2 or (r-l+1)<N or target < (A[l]*N) or target > (A[r] * N):
                 return
             
-            if N==2:
+            elif N==2:
                 while l<r:
-                    s = nums[l] + nums[r]
-                    if s==target:
-                        results.append(result + [nums[l], nums[r]])
+                    curr_sum = A[l] + A[r]
+                    
+                    if curr_sum == target:
+                        results.append(result + [A[l]] + [A[r]])
                         l+=1
-                        while l<r and nums[l]==nums[l-1]:
+                        while l<r and A[l] == A[l-1]:
                             l+=1
-                    elif s>target:
+                    
+                    elif curr_sum > target:
                         r-=1
+                    
                     else:
                         l+=1
             
             else:
                 for i in range(l, r+1):
-                    if i==l or (i>l and nums[i-1]!=nums[i]):
-                        findNSum(i+1, r, target-nums[i], N-1, result + [nums[i]], results)
+                    if i==l or (i>l and A[i]!=A[i-1]):
+                        findNSum(i+1, r, N-1, target - A[i], result + [A[i]], results)
             
-        nums.sort()
+        
+        A.sort()
         results = []
-        findNSum(0, len(nums)-1, target, 4, [], results)
+        findNSum(0, len(A)-1, 4, target, [], results)
         return results
-                
+        

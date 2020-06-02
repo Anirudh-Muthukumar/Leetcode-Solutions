@@ -1,6 +1,9 @@
+import collections
+
 class TrieNode:
+    
     def __init__(self):
-        self.children = [0]*26
+        self.children = collections.defaultdict(TrieNode)
         self.isWord = False
 
 class Trie:
@@ -9,60 +12,40 @@ class Trie:
         """
         Initialize your data structure here.
         """
-        self.root = self.getNode()
-    
-    def getNode(self):
-        return TrieNode()
-    
-    def getIndex(self, ch):
-        if 'a'<=ch<='z':
-            return ord(ch) - ord('a')
-        else:
-            return ord(ch) - ord('A')
+        self.root = TrieNode()
+        
 
-    def insert(self, word: str) :
+    def insert(self, word: str) -> None:
         """
         Inserts a word into the trie.
         """
-        marker = self.root
-        
-        for i in range(len(word)):
-            index = self.getIndex(word[i])
-            if not marker.children[index]:
-                marker.children[index] = self.getNode()
-            marker = marker.children[index]           
-        
-        marker.isWord = True
+        node = self.root
+        for ch in word:
+            node = node.children[ch]
+        node.isWord = True
         
 
     def search(self, word: str) -> bool:
         """
         Returns if the word is in the trie.
         """
-        marker = self.root
-        
-        for i in range(len(word)):
-            index = self.getIndex(word[i])
-            if not marker.children[index]:
+        node = self.root
+        for ch in word:
+            node = node.children.get(ch)
+            if not node:
                 return False
-            marker = marker.children[index]
-        
-        return marker is not None and marker.isWord
-        
+        return node.isWord
 
     def startsWith(self, prefix: str) -> bool:
         """
         Returns if there is any word in the trie that starts with the given prefix.
         """
-        marker = self.root
-        
-        for i in range(len(prefix)):
-            index = self.getIndex(prefix[i])
-            if not marker.children[index]:
+        node = self.root
+        for ch in prefix:
+            node = node.children.get(ch)
+            if not node:
                 return False
-            marker = marker.children[index]
-        
-        return marker is not None
+        return True
         
 
 
