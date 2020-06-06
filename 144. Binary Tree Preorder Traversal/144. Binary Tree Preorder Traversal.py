@@ -5,22 +5,20 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def kthSmallest(self, root, k):
-        # inorder traversal gives elements is ascending order
-        inorder = []
+    def preorderTraversal(self, root):
+        # preorder: Node -> left -> right
+        
+        preorder = []
         stack = []
         
         while root or stack:
+            
             while root != None:
+                preorder += root.val,
                 stack += root,
                 root = root.left
             
             root = stack.pop()
-            inorder += root.val,
-            k -= 1
-            if k==0:
-                return root.val
-    
             root = root.right
         
-        return -1
+        return preorder

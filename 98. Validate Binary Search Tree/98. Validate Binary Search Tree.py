@@ -5,22 +5,26 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def kthSmallest(self, root, k):
-        # inorder traversal gives elements is ascending order
+    def isValidBST(self, root):
+        # inorder traversal should give ascending order
         inorder = []
         stack = []
         
         while root or stack:
-            while root != None:
+            while root!=None:
                 stack += root,
                 root = root.left
             
             root = stack.pop()
+            
+            if len(inorder)>=1 and inorder[-1] >= root.val:
+                return False
+            
             inorder += root.val,
-            k -= 1
-            if k==0:
-                return root.val
-    
             root = root.right
         
-        return -1
+        return True
+            
+            
+                
+            

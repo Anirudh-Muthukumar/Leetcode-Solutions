@@ -5,22 +5,22 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def kthSmallest(self, root, k):
-        # inorder traversal gives elements is ascending order
-        inorder = []
+    def inorderTraversal(self, root):
+        
+        # Inorder: Left -> Node -> Right
         stack = []
+        inorder = []
         
         while root or stack:
-            while root != None:
+            
+            while root:
                 stack += root,
                 root = root.left
             
             root = stack.pop()
             inorder += root.val,
-            k -= 1
-            if k==0:
-                return root.val
-    
             root = root.right
         
-        return -1
+        return inorder
+            
+        
