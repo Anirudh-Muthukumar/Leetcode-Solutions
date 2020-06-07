@@ -1,33 +1,20 @@
 class Solution:
     def floodFill(self, image, sr, sc, newColor):
         
-        m = len(image)
-        if m==0:
-            return []
+        if image == [] or image[sr][sc]==newColor:
+            return image
         
-        n = len(image[0])
+        m, n = len(image), len(image[0])
         
+        q = [(sr, sc)]
         oldColor = image[sr][sc]
-        visited = set()
         
-        def dfs(x, y):
-
+        while q:
+            (x, y) = q.pop()
             image[x][y] = newColor
-            visited.add((x, y))
             
-            if 0<=x+1<m and 0<=y<n and image[x+1][y]==oldColor and (x+1, y) not in visited:
-                dfs(x+1, y)
-            if 0<=x-1<m and 0<=y<n and image[x-1][y]==oldColor and (x-1, y) not in visited:
-                dfs(x-1, y)
-            if 0<=x<m and 0<=y+1<n and image[x][y+1]==oldColor and (x, y+1) not in visited:
-                dfs(x, y+1)
-            if 0<=x<m and 0<=y-1<n and image[x][y-1]==oldColor and (x, y-1) not in visited:
-                dfs(x, y-1)
-        
-        dfs(sr, sc)
+            for i, j in ((x+1, y), (x-1, y), (x, y+1), (x, y-1)):
+                if 0<=i<m and 0<=j<n and image[i][j]==oldColor:
+                    q.append((i, j))
         
         return image
-            
-            
-            
-            
