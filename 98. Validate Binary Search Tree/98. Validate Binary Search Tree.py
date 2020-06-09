@@ -5,26 +5,23 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def isValidBST(self, root):
-        # inorder traversal should give ascending order
-        inorder = []
-        stack = []
+    def isValidBST(self, root: TreeNode) -> bool:
         
-        while root or stack:
-            while root!=None:
+        # BST gives ascending order of numbers in inorder traversal
+        
+        stack = []
+        res = []
+        
+        while stack or root:
+            
+            while root:
                 stack += root,
                 root = root.left
             
             root = stack.pop()
-            
-            if len(inorder)>=1 and inorder[-1] >= root.val:
+            if res and root.val <= res[-1]:
                 return False
-            
-            inorder += root.val,
+            res += root.val,
             root = root.right
         
         return True
-            
-            
-                
-            
