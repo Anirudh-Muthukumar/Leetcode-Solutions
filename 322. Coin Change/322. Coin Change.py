@@ -3,21 +3,18 @@ Time complexity : O(n * target)
 Space complexity: O(target)
 '''
 
-def coinChange(self, coins: List[int], amount: int) -> int:
-        
+class Solution:
+    def coinChange(self, coins, amount):
         T = [float('inf')] * (amount+1)
         T[0] = 0
         
-        for total in range(1, amount+1):
-            res = float('inf')
-            
-            for coin in coins:
-                if coin<=total:
-                    res = T[total-coin]
-                    T[total] = min(T[total], res + 1)
+        for i in range(1, amount+1):
+            for j in coins:
+                if j<=i:
+                    T[i] = min(T[i], T[i-j]+1)
         
-        if T[amount]!=float('inf'):
-                return T[amount]
+        if T[amount] < float('inf'):
+            return T[amount]
         
         return -1
             
