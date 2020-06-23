@@ -1,10 +1,19 @@
 class Solution:
     def isPowerOfTwo(self, n):
+        if n==0:
+            return False
+        return n & (n-1) == 0
         
-        while n > 1:
-            if n%2==0:
-                n = n// 2
-            else:
-                return False
+'''
+Method 2  
+'''  
+# class Solution:
+#     def isPowerOfTwo(self, n):
+#         ct = 0 
+#         while n>0:
+#             ct+=1
+#             n &= (n-1)
+#         return ct==1
         
-        return n==1
+
+        

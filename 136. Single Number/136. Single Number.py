@@ -4,11 +4,9 @@ Space Complexity: O(1)
 '''
 
 class Solution:
-    def singleNumber(self, nums: List[int]) -> int:
-        
-        res = nums[0]
-        
-        for i in range(1, len(nums)):
-            res ^= nums[i]
+    def singleNumber(self, A):
+        res = 0 
+        for a in A:
+            res ^= a
         
         return res
