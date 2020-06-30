@@ -6,16 +6,21 @@
 #         self.right = right
 class Solution:
     def kthSmallest(self, root, k):
+        # inorder traversal gives elements is ascending order
+        inorder = []
+        stack = []
         
-        res = []
-        
-        def InOrder(node):
-            if node:
-                InOrder(node.left)
-                res.append(node.val)
-                InOrder(node.right)
-        
-        InOrder(root)
-        
-        return res[k-1]
+        while root or stack:
+            while root != None:
+                stack += root,
+                root = root.left
             
+            root = stack.pop()
+            inorder += root.val,
+            k -= 1
+            if k==0:
+                return root.val
+    
+            root = root.right
+        
+        return -1
