@@ -1,19 +1,49 @@
 class Solution:
     def minFallingPathSum(self, A):
-        m, n = len(A), len(A[0])
         
-        for i in range(1, m):
-            for j in range(n):
-                top = A[i-1][j]
-                top_left = float('inf')
-                top_right = float('inf')
-                if j>0:
-                    top_left = A[i-1][j-1]
-                if j<n-1:
-                    top_right = A[i-1][j+1]
-                    
-                A[i][j] += min(top, top_left, top_right)
-        
+        def bottomUp():
+            m, n = len(A), len(A[0])
+            dp = [x[::] for x in A]
             
-        return min(A[m-1])
-                
+            for i in range(1, m):
+                for j in range(n):
+                    left = dp[i-1][j-1] if j>0 else float('inf')
+                    top = dp[i-1][j]
+                    right = dp[i-1][j+1] if j<n-1 else float('inf')
+                    dp[i][j] += min(left, top, right)
+    
+            return min(dp[m-1])
+        
+        
+        def topDown():
+            m, n = len(A), len(A[0])
+            dp = [x[::] for x in A]
+            
+            for i in range(m-2, -1, -1):
+                for j in range(n):
+                    left = dp[i+1][j-1] if j>0 else float('inf')
+                    top = dp[i+1][j]
+                    right = dp[i+1][j+1] if j<n-1 else float('inf')
+                    dp[i][j] += min(left, top, right)
+            
+            return min(dp[0])
+        
+        def linearSpace():
+            m, n = len(A), len(A[0])
+            first = A[0][::]
+            
+            for i in range(1, m):
+                second = A[i][::]
+                for j in range(n):
+                    left = first[j-1] if j>0 else float('inf')
+                    top = first[j]
+                    right = first[j+1] if j<n-1 else float('inf')
+                    second[j] += min(left, top, right)
+                first = second[::]
+        
+            return min(first)
+        
+        return linearSpace()
+        return bottomUp()
+        return topDown()
+        
