@@ -1,30 +1,36 @@
-def rob(nums) -> int:
-    
-    # maximum sum of subsequence without adjacent elements 
-    
-    def maximumSum(nums, n, lookup):
+class Solution:
+    def rob(self, A):
         
-        if n<0:
-            return 0
-        
-        key = str(nums) + '|' + str(n)
-        
-        if key not in lookup:
-            
-            # include current element and recur for n-2
-            include = nums[n] + maximumSum(nums, n-2, lookup)
-            
-            # exclude current element and recur for n-1
-            exclude = maximumSum(nums, n-1, lookup)
-            
-            lookup[key] = max(include, exclude)
-        
-        return lookup[key]
-    
-    return maximumSum(nums, len(nums)-1, {})
+        def topDown():
+            def rob(i, robbed, n, dp):
+                if i>=n:
+                    return robbed
 
-if __name__ == '__main__':
+                key = (i, robbed)
+                if key not in dp:
+                    dp[key] = max(rob(i+1, robbed, n, dp), rob(i+2, robbed + A[i], n, dp))
+                return dp[key]
+            
+            n = len(A)
+            return rob(0, 0, n, {})
+        
+        
+        def bottomUp(): 
+            n = len(A)
+            
+            if n <= 2:
+                return max(A) if n>0 else 0
+        
+            max_one, max_two = 0, 0
+            res = 0
+            for i in range(n):
+                curr = max(max_two + A[i], max_one)
+                max_two = max_one
+                max_one = curr
+            
+            return curr
+            
 
-    arr = [2,7,9,3,1] # test case
+        return bottomUp()
 
-    print("Answer = ", rob(arr))
+            
