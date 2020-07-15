@@ -1,41 +1,49 @@
 '''
 Time Complexity : O(mn)
-Space Complexity: O(mn)
+Space Complexity: O(n)
 
 '''
 
-def editDistance(X, Y):
-
-    m, n = len(X), len(Y)
-
-    # 2D array to store results of subproblems
-    T = [[0 for _ in range(n+1)]for _ in range(m+1)]
-
-    # source is empty and target is non-empty: insertions
-    for j in range(1, n+1):
-        T[0][j] = j 
-    
-    # source is non-empty and target is empty: deletions
-    for i in range(1, m+1):
-        T[i][0] = i 
-    
-    for i in range(1, m+1):
-        for j in range(1, n+1):
-            if X[i-1]==Y[j-1]:
-                substitutionCost = 0
-            else: 
-                substitutionCost = 1 
-
-            insertionCost = T[i-1][j]
-            deletionCost = T[i][j-1]
-
-            T[i][j] = min(min(insertionCost + 1, deletionCost + 1), T[i-1][j-1] + substitutionCost) 
+class Solution:
+    def minDistance(self, x, y):
         
-    return T[m][n]
+        def bottomUp():
+            m, n = len(x), len(y)
+            T = [[0 for _ in range(n+1)] for _ in range(m+1)]
 
+            for i in range(m+1):
+                T[i][0] = i
+            for j in range(1, n+1):
+                T[0][j] = j
 
-if __name__ == '__main__':
-    X = "intention"
-    Y = "execution"
+            for i in range(1, m+1):
+                for j in range(1, n+1):
+                    if x[i-1]==y[j-1]:
+                        T[i][j] = T[i-1][j-1]
+                    else:
+                        T[i][j] = 1 + min(T[i-1][j], T[i][j-1], T[i-1][j-1])
 
-    print("Edit distance = ", editDistance(X, Y))
+            return T[m][n]
+        
+        
+        def linearSpace():
+            m, n = len(x), len(y)
+            first = [j for j in range(n+1)]
+            
+            for i in range(1, m+1):
+                second = [0 for _ in range(n+1)]
+                second[0] = i
+                for j in range(1, n+1):
+                    if x[i-1]==y[j-1]:
+                        second[j] = first[j-1]
+                    else:
+                        second[j] = 1 + min(first[j], second[j-1], first[j-1])
+                
+                first = second[::]
+                
+            return first[n]
+        
+        
+        return linearSpace()
+        
+            
