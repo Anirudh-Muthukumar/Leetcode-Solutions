@@ -3,9 +3,10 @@ Time complexity : O(log n)
 Space complexity: O(1)
 '''
 
-def isBadVersion(version):
-    ''' Inbuilt '''
-    pass 
+# The isBadVersion API is already defined for you.
+# @param version, an integer
+# @return an integer
+# def isBadVersion(version):
 
 class Solution:
     def firstBadVersion(self, n):
@@ -13,19 +14,14 @@ class Solution:
         :type n: int
         :rtype: int
         """
-        lo = 1
-        hi = n
+        l, r = 1, n
         
-        while lo<hi:
-            mid = (lo + hi) // 2
-            
-            if not isBadVersion(mid) and isBadVersion(mid+1):
-                return mid+1 
-            
-            elif not isBadVersion(mid) and not isBadVersion(mid+1):
-                lo = mid
-            
+        while l<r:
+            mid = (l+r)>>1
+            if not isBadVersion(mid):
+                l = mid+1
             else:
-                hi = mid
+                r = mid
         
-        return lo
+        return l
+        
