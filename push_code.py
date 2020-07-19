@@ -33,7 +33,7 @@ class PushCode:
             print(push_cmd.returncode)
             print("\t -> Push failed")
     
-if __name__ == '__main__':
+if __name__ == '__main__': # Specify message and branch name has CMD arguments
     push_obj = PushCode()
     push_obj.segregate_repo() 
     push_obj.push_commands()
