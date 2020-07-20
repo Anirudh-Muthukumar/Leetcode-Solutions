@@ -5,3 +5,5 @@
 *.pkl
 .DS_Store
 untitled folder
+__pycache__
+*.pyc
