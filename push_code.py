@@ -19,8 +19,6 @@ class PushCode:
         try:
             add_cmd = subprocess.run(["git", "add", "."], capture_output = True)
             commit_cmd = subprocess.run(["git", "commit", "-m", commit_msg], capture_output = True)
-            # default_branch_cmd = subprocess.run(["git", "symbolic-ref", "--short", "HEAD"], capture_output = True)
-            # default_branch = default_branch_cmd.stdout.decode("utf-8")
             push_cmd = subprocess.run(["git", "push", "origin", branch_name], capture_output = True)
             push_success = push_cmd.returncode == 0
         except:
