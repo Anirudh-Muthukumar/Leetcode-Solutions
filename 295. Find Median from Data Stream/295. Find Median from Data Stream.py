@@ -1,26 +1,28 @@
-import bisect
+import heapq
 
-class MedianFinder :
+class MedianFinder:
 
     def __init__(self):
         """
         initialize your data structure here.
         """
-        self.data = []
+        self.small = []
+        self.large = []
             
 
     def addNum(self, num):
-        index = bisect.bisect(self.data, num)
-        self.data.insert(index, num)
+        if len(self.small) == len(self.large):
+            heapq.heappush(self.large, -heapq.heappushpop(self.small, -num))
+        else:
+            heapq.heappush(self.small, -heapq.heappushpop(self.large, num))
 
     def findMedian(self):
-        n = len(self.data)
-        if n&1:
-            return self.data[n>>1]
-        return (self.data[n>>1] + self.data[(n>>1)-1]) * 0.5
-
+        if len(self.small) == len(self.large):
+            return (-self.small[0] + self.large[0]) * 0.5
+        else:
+            return self.large[0]
 
 # Your MedianFinder object will be instantiated and called as such:
 # obj = MedianFinder()
 # obj.addNum(num)
-# param_2 = obj.findMedian()
+# param_2 = obj.findMedian().
