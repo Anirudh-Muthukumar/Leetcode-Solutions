@@ -1,6 +1,4 @@
 class Solution:
-    def addDigits(self, num: int) -> int:
-        if num:
-            return 1 + (num - 1) % 9
-        else:
-            return 0
+    def addDigits(self, x):
+        return 1 + (x-1)%9 if x else 0
+        
