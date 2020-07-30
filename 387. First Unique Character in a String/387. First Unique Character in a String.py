@@ -1,17 +1,17 @@
 '''
 Time complexity : O(n)
-Space complexity: O(n)
+Space complexity: O(1)
 '''
 
 import collections
 
 class Solution:
-    def firstUniqChar(self, s: str) -> int:
+    def firstUniqChar(self, s):
+        counter = collections.Counter(s)
         
-        count = collections.Counter(s)
-        
-        for ind, c in enumerate(s):
-            if count[c]==1:
-                return ind
+        for ch in counter:
+            if counter[ch]==1:
+                return s.index(ch)
         
         return -1
+            
