@@ -1,2 +1,2 @@
 # Leetcode-solutions
-Solutions for leetcode (https://leetcode.com/) problems in python.
+https://skdoosh-leetcode.herokuapp.com Solutions for problems in www.leetcode.com in python.

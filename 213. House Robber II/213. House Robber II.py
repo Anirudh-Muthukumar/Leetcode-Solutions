@@ -5,52 +5,43 @@ Compute the maximum sum subsequence with no adjacent elements for both cases sep
 return the maximum. 
 
 Time complexity : O(n)
-Space complexity: O(n)
+Space complexity: O(1)
 
 '''
 
-def rob(nums) -> int:
+class Solution:
+    def rob(self, A):
+        n = len(A)
+        if n<=3:
+            return max(A) if n>0 else 0
         
-        def maximumSum(nums, n):
-            nonlocal lookup
+        def topDown():
+            n = len(A)
             
-            if n<0:
-                return 0
-            
-            key = str(nums) + '|' + str(n)
-            
-            if key not in lookup:
-                # include current element and recur for n-2
-                include = nums[n] + maximumSum(nums, n-2)
+            def rob(i, robbed, n, dp):
+                if i>=n:
+                    return robbed
                 
-                # exclude current element and recur for n-1
-                exclude = maximumSum(nums, n-1)
+                key = (i, robbed)
+                if key not in dp:
+                    dp[key] = max(rob(i+2, robbed + A[i], n, dp), rob(i+1, robbed, n, dp))
                 
-                lookup[key] = max(include, exclude)
+                return dp[key]
             
-            return lookup[key]
-    
-        lookup = {}
+            return max(rob(0, 0, n-1, {}), rob(1, 0, n, {}))
         
-        n = len(nums)
         
-        if n==0:
-            return 0
+        def bottomUp():
+            def rob(l, r):
+                max_one, max_two = 0, 0
+                curr = 0
+                for i in range(l, r):
+                    curr = max(max_one, max_two + A[i])
+                    max_two = max_one
+                    max_one = curr
+                return curr
+            
+            return max(rob(0, n-1), rob(1, n))
         
-        if 1<=n<=3:
-            return max(nums)
-        
-        # exclude first house
-        first_house = maximumSum(nums[1:], n-2)
-
-        # exclude last house
-        last_house = maximumSum(nums[:-1], n-2)
-
-        return max(first_house, last_house)
-
-
-if __name__ == '__main__':
-    
-    arr = [1,2,3,4,5,6] 
-
-    print("\nAnswer = %d\n" % rob(arr))
+        return bottomUp()
+        return topDown()

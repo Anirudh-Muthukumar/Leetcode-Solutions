@@ -4,36 +4,34 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    
-    def reverse(self, head):
-        if not head:
-            return head
-        prev = None
-        curr = head
-        next_node = None
-        while curr:
-            next_node = curr.next
-            curr.next = prev
-            prev = curr
-            curr = next_node
-        return prev
-    
-    def isPalindrome(self, head):        
-        # palindrome is symmetric
-        slow, fast = head, head
-        ct = 0 
+    def isPalindrome(self, head):
         
-        while fast and fast.next:
+        def reverse(head):
+            if not head:
+                return head
+            
+            temp = head
+            prev = None
+            while temp:
+                next_node = temp.next
+                temp.next = prev
+                prev = temp
+                temp = next_node
+                
+            return prev
+            
+        n = 0
+        slow, fast = head, head
+        while slow and fast and fast.next:
             slow = slow.next
             fast = fast.next.next
         
-        mid = self.reverse(slow)
+        mid = reverse(slow)
         
-        while mid:
-            if mid.val!=head.val:
+        while mid and head:
+            if mid.val != head.val:
                 return False
             mid = mid.next
             head = head.next
         
         return True
-        

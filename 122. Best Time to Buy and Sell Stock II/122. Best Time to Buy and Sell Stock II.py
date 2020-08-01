@@ -1,11 +1,8 @@
 class Solution:
     def maxProfit(self, A):
-        profit = 0
-        if len(A)>0:
-            prev = A[0]
-            for i in range(len(A)):
-                if A[i]>prev:
-                    profit += A[i]-prev
-                prev = A[i]
+        res = 0
+        for i in range(1, len(A)):
+            res += (A[i]-A[i-1]) if A[i] > A[i-1] else 0
         
-        return profit
+        return res
+        

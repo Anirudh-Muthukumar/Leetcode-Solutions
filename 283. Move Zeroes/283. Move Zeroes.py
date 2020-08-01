@@ -1,14 +1,13 @@
 class Solution:
-    def moveZeroes(self, nums):
+    def moveZeroes(self, A):
         """
         Do not return anything, modify nums in-place instead.
         """
-        start = 0
-        end = 0
+        i = 0
+        n = len(A)
+        for j in range(n):
+            if A[j]:
+                A[i], A[j] = A[j], A[i]
+                i+=1
         
-        for end in range(len(nums)):
-            if nums[end]!=0:
-                nums[start], nums[end] = nums[end], nums[start]
-                start += 1
-        
-        return nums
+        return A

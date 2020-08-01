@@ -3,23 +3,22 @@ Time complexity : O(n)
 Space complexity: O(n)
 '''
 
-def findMaxLength(self, nums):
-    n = len(nums)
-    if n==0:
-        return 0
-    mp = {0: 0}
-    maxlen = 0
-    curr_sum = 0
-    for i in range(n):
-        if nums[i]==0:
-            curr_sum -= 1
-        else:
-            curr_sum += 1
+import collections
+
+class Solution:
+    def findMaxLength(self, A):
+        res = 0
+        mp = collections.defaultdict()
+        mp[0] = -1
+        curr_sum = 0
+        for i, x in enumerate(A):
+            curr_sum += 1 if x == 1 else -1
+            if curr_sum in mp:
+                
+                res = max(res, (i - mp[curr_sum]))
+            else:
+                mp[curr_sum] = i
         
-        if curr_sum not in mp:
-            mp[curr_sum] = i + 1
         
-        if maxlen < (i+1)-mp[curr_sum]:
-            maxlen = (i+1)-mp[curr_sum]
-    
-    return maxlen
+        return res
+        
