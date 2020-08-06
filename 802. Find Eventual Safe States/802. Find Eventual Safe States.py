@@ -2,26 +2,26 @@ import collections
 
 class Solution:
     def eventualSafeNodes(self, graph):
-        # WHITE - GRAY - BLACK DFS
-        
-        # mark a node GRAY on entry, BLACK on exit
-        WHITE, GRAY, BLACK = 0, 1, 2
-        
-        color = collections.defaultdict(int)
+        # 3 color problem: 0. Unvisited 1. Processing 2. Processed
         
         def dfs(node):
-            if color[node]!=WHITE:
-                return color[node]==BLACK
-            
-            color[node] = GRAY
-            
+            if visited[node]!=0:
+                return visited[node]==2
+            visited[node] = 1
             for nei in graph[node]:
-                if color[nei]==BLACK: # leading to a terminal node
-                    continue
-                if color[nei]==GRAY or not dfs(nei): # leading to a cycle
+                if visited[nei]==1:
+                    return False
+                elif visited[nei]==0 and not dfs(nei):
                     return False
             
-            color[node] = BLACK
+            visited[node] = 2
             return True
         
-        return filter(dfs, range(len(graph)))
+        n = len(graph)
+        visited = [0] * n
+        res = []
+        for i in range(n):
+            if dfs(i):
+                res += i,
+        
+        return res
