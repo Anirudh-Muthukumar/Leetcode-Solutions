@@ -17,7 +17,7 @@ class Solution:
         res = 0
         while q:
             x, y, ct = q.popleft()
-            res = max(res, ct)
+            res = max(res, ct)       
             for i, j in ((x+1, y), (x-1, y), (x, y+1), (x, y-1)):
                 if 0<=i<m and 0<=j<n and not visited[i][j] and grid[i][j]==1:
                     q.append((i, j, ct+1))
