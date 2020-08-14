@@ -1,3 +1,8 @@
+'''
+Time complexity : O(n)
+Space complexity: O(n)
+'''
+
 import collections
 
 # Definition for a binary tree node.
