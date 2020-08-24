@@ -1,3 +1,10 @@
+'''
+Time complexity: O(n)
+Space complexity: O(1)
+'''
+
+
+
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, x):
