@@ -1,5 +1,5 @@
 '''
-Idea: Perform BFS starting from first cell. In each iteration you can land in one among six possible states.
+Idea: Flatten the given board into a 1-D array. Perform BFS starting from first cell. In each iteration you can land in one among six possible states. Find the number of steps to reach last index in the array.
 
 Time complexity : O(n^2)
 Space complexity: O(n^2)
