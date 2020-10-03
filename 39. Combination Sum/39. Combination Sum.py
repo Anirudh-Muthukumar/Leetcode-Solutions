@@ -1,15 +1,29 @@
-class Solution:
-    def permute(self, A):
-        
-        def BT(A, l, r):
-            if l==r:
-                res.append(A)
-            else:
-                for i in range(l, r+1):
-                    A[l], A[i] = A[i], A[l]
-                    BT(A[:], l+1, r)
-                    A[l], A[i] = A[i], A[l]
+"""
+Idea: Backtracking
 
+Time complexity : O(2^n)
+Space complexity: O(2^n)
+"""
+
+class Solution:
+    def combinationSum(self, candidates, target):
+        n = len(candidates)
+        
+        def util(index, rem, path, res):
+            if rem == 0:
+                res += path,
+                return
+            
+            # Backtrack if necessary
+            if rem < 0 or index >= n:
+                return
+ 
+            util(index, rem - candidates[index], path + [candidates[index]], res)
+
+            util(index + 1, rem, path, res)
+                
+                
+        dp = {}
         res = []
-        BT(A[:], 0, len(A)-1)
-        return res
+        util(0, target, [], res)
+        return res 
