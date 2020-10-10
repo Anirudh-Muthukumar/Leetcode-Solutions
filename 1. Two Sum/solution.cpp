@@ -1,20 +1,21 @@
-#include<map>
 #include<vector>
+#include<map>
 using namespace std;
 
 class Solution {
 public:
-    vector<int> twoSum(vector<int>& nums, int k) {
-        int n = nums.size();
-        vector<int> res(2, -1);
-        map<int, int> hash;
+    vector<int> twoSum(vector<int>& nums, int target) {
+        map<int, int> mp;
+        int n = nums.size(), complement;
+        
         for(int i = 0; i < n; ++i){
-            if(hash.find(k - nums[i]) != hash.end()){
-                res = {hash[k - nums[i]], i};
-                return res;
-            }
-            hash[nums[i]] = i;
+            complement = target - nums[i];
+            if(mp.find(complement) != mp.end())
+                return {i, mp[complement]};
+            
+            mp[nums[i]] = i;
         }
-        return res;
+            
+        return {-1, -1};
     }
 };
