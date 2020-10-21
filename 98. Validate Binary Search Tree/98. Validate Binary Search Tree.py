@@ -1,3 +1,13 @@
+"""
+Idea: Start from root with unbounded limits. Perform BFS and keep updating the limits of node at each level
+
+Time complexity : O(n)
+Space complexity: O(n)
+"""
+
+
+import collections
+
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
@@ -5,23 +15,23 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def isValidBST(self, root: TreeNode) -> bool:
+    def isValidBST(self, root):
+        if not root:
+            return True
         
-        # BST gives ascending order of numbers in inorder traversal
+        q = collections.deque([(float('-inf'), root, float('inf'))])
         
-        stack = []
-        res = []
-        
-        while stack or root:
+        while q:
+            low, node, high = q.popleft()
             
-            while root:
-                stack += root,
-                root = root.left
-            
-            root = stack.pop()
-            if res and root.val <= res[-1]:
+            if not low < node.val < high:
                 return False
-            res += root.val,
-            root = root.right
+            
+            if node.left:
+                q += (low, node.left, node.val),
+            
+            if node.right:
+                q += (node.val, node.right, high),
+            
         
         return True
