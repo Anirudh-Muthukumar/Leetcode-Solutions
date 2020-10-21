@@ -1,23 +1,34 @@
+"""
+Time complexity : O(n)
+Space complexity: O(n)
+"""
+
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, x):
 #         self.val = x
 #         self.left = None
 #         self.right = None
+import collections
+
 
 class Solution:
-    def lowestCommonAncestor(self, root, p, q):
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
         if p.val > q.val:
             return self.lowestCommonAncestor(root, q, p)
         
-        if p.val <= root.val <= q.val:
-            return root
+        queue = collections.deque([root])
         
-        if p.val < root.val and q.val < root.val:
-            return self.lowestCommonAncestor(root.left, p, q)
-        elif p.val > root.val and q.val > root.val:
-            return self.lowestCommonAncestor(root.right, p, q)
-    
-        return None
-
-
+        while queue:
+            node = queue.popleft()
+            
+            if p.val <= node.val <= q.val:
+                return node
+            
+            if q.val < node.val:
+                queue += node.left,
+            
+            if p.val > node.val:
+                queue += node.right,
+        
+        return -1
