@@ -1,3 +1,10 @@
+"""
+Idea: Inorder traversal of BST gives elements in ascending order.
+
+Time complexity : O(n)
+Space complexity: O(n)
+"""
+
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
@@ -6,21 +13,20 @@
 #         self.right = right
 class Solution:
     def kthSmallest(self, root, k):
-        # inorder traversal gives elements is ascending order
-        inorder = []
         stack = []
+        node = root
         
-        while root or stack:
-            while root != None:
-                stack += root,
-                root = root.left
+        while node or stack:
+            while node:
+                stack += node,
+                node = node.left
             
-            root = stack.pop()
-            inorder += root.val,
+            node = stack.pop()
             k -= 1
-            if k==0:
-                return root.val
-    
-            root = root.right
+            
+            if k == 0:
+                return node.val
+            
+            node = node.right
         
         return -1
