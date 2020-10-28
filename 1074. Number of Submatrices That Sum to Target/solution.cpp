@@ -1,8 +1,8 @@
 /*
 Idea: DP
 
-Time complexity : O(m * n)
-Space complexity: O(n)
+Time complexity : O(m^2 * n^2)
+Space complexity: O(m * n)
 */
 #include<vector>
 using namespace std;
