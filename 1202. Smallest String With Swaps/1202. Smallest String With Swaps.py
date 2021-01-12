@@ -1,5 +1,5 @@
 """
-Idea: DFS and sort the letters in each connected component
+Idea: Find the connected components and sort the letters in each component
 
 """
 
