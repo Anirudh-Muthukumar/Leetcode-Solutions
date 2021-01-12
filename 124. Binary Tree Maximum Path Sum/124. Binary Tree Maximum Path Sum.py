@@ -3,12 +3,14 @@ Time complexity: O(n)
 Space complexity: O(1)
 '''
 
+
+
 # Definition for a binary tree node.
-class TreeNode:
-    def __init__(self, x):
-        self.val = x
-        self.left = None
-        self.right = None
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
 
 class Solution:
     def maxPathSum(self, root):
@@ -22,13 +24,11 @@ class Solution:
             right = util(root.right)
             
             '''
-            Path can either look like:
-
-                        /          /             /                   /
-                    -> /   ,   -> /     or   -> /     not like   -> /
-                      /           \                                / \
-
-            So atmost one child can participate when parent of the node is participating
+            Path can either look like        /    or  /     not like       /
+                                         -> /     -> /                 -> /
+                                           /         \                   / \
+            
+            So atmost one child can participate when parent of node is participating
             '''
             
             # parent_path -> parent of node is interested in participating
@@ -36,10 +36,10 @@ class Solution:
             parent_path = max(root.val, root.val + max(left, right))
             
             # node_path -> parent of root does not show interest
-            # so consider both the child of current node as well
-            node_path = max(parent_path, root.val + left + right)
+            # so consider both the child of current node
+            node_path = root.val + left + right
             
-            self.res = max(self.res, node_path)  # update result
+            self.res = max(self.res, node_path, parent_path)  # update result
             
             return parent_path  # allow parent to get its result
             

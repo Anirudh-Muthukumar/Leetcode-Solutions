@@ -1,31 +1,21 @@
 import collections
 
 class Solution:
-    def isBipartite(self, Graph):
-        graph = collections.defaultdict(list)
-        
-        for i in range(len(Graph)):
-            for edge in Graph[i]:
-                graph[i] += edge,
-        
-        
-        node_color = {}
-        visited = set()
-        
-        for i in graph:
+    def isBipartite(self, graph):
+        visited = collections.defaultdict()
+        for i in range(len(graph)):
             if i not in visited:
-                q = [(i, 1)]
-                
+                q = collections.deque([(i, 0)])
+                visited[i] = 0
                 while q:
-                    node, color = q.pop()
-                    visited.add(node)
-                    node_color[node] = color
-                    
+                    node, color = q.popleft()
                     for nei in graph[node]:
-                        if nei not in visited: # if not colored, color the node
-                            q += (nei, 1-color),
-                        elif node_color[nei]!=(1-color): # if colored, check if color matches
+                        if nei not in visited:
+                            q.append((nei, 1-color))
+                            visited[nei] = 1-color
+                        elif nei in visited and visited[nei]!=(1-color):
                             return False
-                    
+                
         return True
-            
+                
+        

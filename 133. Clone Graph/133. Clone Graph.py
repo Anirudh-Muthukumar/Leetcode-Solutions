@@ -1,3 +1,13 @@
+"""
+Idea: Do tree traversal and keep creating nodes and their respective links, if they are not present in hash table.
+
+
+Time complexity : O(n)
+Space complexity: O(n)
+
+"""
+
+
 import collections
 
 """
@@ -9,17 +19,15 @@ class Node:
 """
 
 class Solution:
-    def cloneGraph(self, node: 'Node'):
+    def cloneGraph(self, node: 'Node') -> 'Node':
         if not node:
-            return 
-        
+            return node
         dic = collections.defaultdict(Node)
         nodeCopy = Node(node.val)
         dic[node] = nodeCopy
-        q = [node]
-        
+        q = collections.deque([node])
         while q:
-            node = q.pop(0)
+            node = q.popleft()
             for neighbor in node.neighbors:
                 if neighbor not in dic:
                     neighborCopy = Node(neighbor.val)
@@ -28,5 +36,5 @@ class Solution:
                     q += neighbor,
                 else:
                     dic[node].neighbors += dic[neighbor],
-        
+                    
         return nodeCopy

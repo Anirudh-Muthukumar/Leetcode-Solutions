@@ -1,10 +1,18 @@
+'''
+Time complexity : O(N log N)
+Space complexity: O(1)
+
+If hashmap is used:
+Time complexity: O(N)
+Space complexity: O(N)
+'''
+
+
 class Solution:
     def containsDuplicate(self, A):
-        T = set()
-        for i in range(len(A)):
-            if A[i] not in T:
-                T.add(A[i])
-            else:
+        n = len(A)
+        A.sort()
+        for i in range(1, n):
+            if A[i] == A[i-1]:
                 return True
-        
         return False

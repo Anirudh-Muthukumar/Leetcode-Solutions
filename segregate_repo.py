@@ -27,6 +27,12 @@ class Segregator:
             if file[0] in ['1','2','3','4','5','6','7','8','9'] and not os.path.exists(folder):
                 print("Folder created for ", file)
                 os.makedirs(folder)
+            
+        for file in glob.glob("*.cpp"):
+            folder = file[:-4]
+            if file[0] in ['1','2','3','4','5','6','7','8','9'] and not os.path.exists(folder):
+                print("Folder created for ", file)
+                os.makedirs(folder)
     
 
     def MoveFilesToFolders(self):
@@ -34,6 +40,11 @@ class Segregator:
         for file in glob.glob("*.py"):
             if file[0] in ['1','2','3','4','5','6','7','8','9']:
                 new_path = file[:-3] + "/" + file 
+                os.rename(file, new_path)
+
+        for file in glob.glob("*.cpp"):
+            if file[0] in ['1','2','3','4','5','6','7','8','9']:
+                new_path = file[:-4] + "/" + "solution.cpp"
                 os.rename(file, new_path)
 
 

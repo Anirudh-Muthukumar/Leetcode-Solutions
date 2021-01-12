@@ -1,43 +1,52 @@
+"""
+Idea: Store the preorder traversal in a data structure. Decode the data in the same fashion.
+
+Time complexity : O(n)
+Space complexity: O(n)
+"""
+
 # Definition for a binary tree node.
-# class TreeNode(object):
+# class TreeNode:
 #     def __init__(self, x):
 #         self.val = x
 #         self.left = None
 #         self.right = None
 
 class Codec:
-
     def serialize(self, root):
         
-        def encode(node):
-            nonlocal data
+        def encode(node, data):
             if node:
                 data += str(node.val),
-                encode(node.left)
-                encode(node.right)
+                encode(node.left, data)
+                encode(node.right, data)
             else:
-                data += "#",
+                data += '#',
         
         data = []
-        encode(root)
+        encode(root, data)
         return ' '.join(data)
-        
 
     def deserialize(self, data):
         
-        def decode(vals):
-            val = next(vals)
-            if val=='#':
+        def decode(iterator):
+            val = next(iterator)
+            
+            if val == '#':
                 return None
-            node = TreeNode(int(val))
-            node.left = decode(vals)
-            node.right = decode(vals)
+            
+            node = TreeNode(val)
+            node.left = decode(iterator)
+            node.right = decode(iterator)
             return node
         
-        vals = iter(data.split())
-        return decode(vals)
-        
+        iterator = iter(data.split())
+        return decode(iterator)
 
 # Your Codec object will be instantiated and called as such:
-# codec = Codec()
-# codec.deserialize(codec.serialize(root))
+# Your Codec object will be instantiated and called as such:
+# ser = Codec()
+# deser = Codec()
+# tree = ser.serialize(root)
+# ans = deser.deserialize(tree)
+# return ans

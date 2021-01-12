@@ -2,11 +2,14 @@ import collections
 
 class Solution:
     def findMinHeightTrees(self, n, edges):
-        if n==1:
-            return [0]
+        # Iteratively find the leaf nodes and remove them from tree
+        # Repeat until there are more than 2 nodes left
         
         graph = collections.defaultdict(list)
-        degree = [0] * n
+        degree = collections.defaultdict(int)
+        
+        if n==1:
+            return [0]
         
         for u, v in edges:
             graph[u] += v,
@@ -14,17 +17,21 @@ class Solution:
             degree[u] += 1
             degree[v] += 1
         
-        q = [node for node in graph if degree[node]==1]
+        q = collections.deque([leaf for leaf in graph if degree[leaf]==1])
+        remaining_nodes = n
         
-        while n>2:
+        while remaining_nodes > 2:
             size = len(q)
             for _ in range(size):
-                node = q.pop(0)
-                n -= 1
-                for j in graph[node]:
-                    degree[j] -= 1
-                    if degree[j]==1:
-                        q += j,
-       
+                node = q.popleft()
+                for nei in graph[node]:
+                    degree[nei] -= 1
+                    if degree[nei]==1:
+                        q.append(nei)
+            remaining_nodes -= size
+        
         return q
+            
+        
+        
         

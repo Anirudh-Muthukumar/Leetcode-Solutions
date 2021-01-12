@@ -6,25 +6,24 @@ import collections
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
 class Solution:
     def verticalTraversal(self, root):
+        mp = collections.defaultdict(lambda : collections.defaultdict(list))
+        q = collections.deque([(root, 0, 0)])
+        while q:
+            node, x, y = q.popleft()
+            mp[y][x] += node.val,
+            if node.left:
+                q.append((node.left, x+1, y-1))
+            if node.right:
+                q.append((node.right, x+1, y+1))
         
-        def dfs(node, x=0, y=0):
-            if node:
-                seen[x][y] += node,
-                if node.left:
-                    dfs(node.left, x-1, y+1)
-                if node.right:
-                    dfs(node.right, x+1, y+1)
-        
-        seen = collections.defaultdict(lambda:collections.defaultdict(list))
-        dfs(root)
         res = []
-        for x in sorted(seen):
-            temp = []
-            for y in sorted(seen[x]):
-                temp.extend(sorted(node.val for node in seen[x][y]))
-            res += temp,
+        for depth in sorted(mp):
+            layer = []
+            for level in mp[depth]: # elements in same depth and level need to be sorted
+                layer += sorted(mp[depth][level])
+            res.append(layer)
         return res
         
-            
