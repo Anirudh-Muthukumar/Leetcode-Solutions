@@ -1,5 +1,5 @@
 """
-Idea: Create hashmap where each key is (col, row) pair and value is the node value.
+Idea: Use hashmaps to store the nodes in the tree and sort them by columns
 
 Time complexity: O(n log n)
 Space complexity: O(n)
