@@ -1,47 +1,40 @@
 class NumArray:
 
-    def __init__(self, A):
-        self.n = len(A)
-        self.tree = [None] * (2*self.n)
-        self.build(A)
-        
-        
-    def build(self, A):
-        for i in range(self.n):
-            self.tree[i+self.n] = A[i]
+    def __init__(self, nums):
+        self.n = n = len(nums)
+        self.A = nums
+        self.BIT = [0] * (n + 1)
+        for i in range(n):
+            self.updateBIT(i+1, nums[i])
 
-        for i in range(self.n-1, 0, -1):
-            self.tree[i] = self.tree[i<<1] + self.tree[i<<1|1]
-        
-
-    def update(self, i, val):
-        p = i + self.n
-        self.tree[p] = val
-        
-        while p>1:
-            self.tree[p>>1] = self.tree[p] + self.tree[p^1]
-            p >>= 1
-
+    def update(self, index, val):
+        diff = val - self.A[index]
+        self.A[index] = val
+        self.updateBIT(index + 1, diff)
         
 
-    def sumRange(self, i, j):
-        res, l, r = 0, i+self.n, j+1+self.n
+    def sumRange(self, left, right):
+        x, y = left + 1, right + 1
+        return self.get(y) - self.get(x-1)
+    
+    def updateBIT(self, index, val):
+        n = self.n
+        while index <= n:
+            self.BIT[index] += val
+            index += (index & (-index))
         
-        while l<r:
-            if l&1:
-                res += self.tree[l]
-                l+=1
-            if r&1:
-                r -= 1
-                res += self.tree[r]
-            l >>= 1
-            r >>= 1
-        
+    
+    def get(self, index):
+        res = 0
+        while index > 0:
+            res += self.BIT[index]
+            index -= (index & (-index))
         return res
+        
         
 
 
 # Your NumArray object will be instantiated and called as such:
 # obj = NumArray(nums)
-# obj.update(i,val)
-# param_2 = obj.sumRange(i,j)
+# obj.update(index,val)
+# param_2 = obj.sumRange(left,right)
