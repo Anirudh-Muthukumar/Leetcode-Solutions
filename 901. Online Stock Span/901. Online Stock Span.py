@@ -1,16 +1,26 @@
+"""
+Idea: Mono stack
+
+Time complexity: O(n)
+Space complexity: O(n)
+"""
+
+import collections
+
 class StockSpanner:
-    
+
     def __init__(self):
-        self.prices = []
+        self.st = collections.deque()
 
     def next(self, price):
-        w = 1
-        while self.prices and self.prices[-1][0] <= price:
-            w += self.prices[-1][1]
-            self.prices.pop()
-            
-        self.prices.append([price, w])
-        return w
+        ct = 1
+        while self.st and self.st[-1][0] <= price:
+            ct += self.st[-1][1]
+            self.st.pop()
+        
+        self.st += (price, ct),
+        return ct
+
 
 # Your StockSpanner object will be instantiated and called as such:
 # obj = StockSpanner()
