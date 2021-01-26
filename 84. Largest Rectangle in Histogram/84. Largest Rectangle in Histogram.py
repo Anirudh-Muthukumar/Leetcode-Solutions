@@ -9,28 +9,16 @@ import collections
 
 class Solution:
     def largestRectangleArea(self, A):
+        if not A:   return 0
         n = len(A)
-        left = [i+1 for i in range(n)]
-        right = [n-i for i in range(n)]
-        
-        st = collections.deque()
-        for i in range(n):
-            while st and A[st[-1]] > A[i]:
-                st.pop()
-            
-            left[i] = i-st[-1] if st else i + 1
+        res = 0
+        st = [-1]
+        h = A[:] + [0]
+        for i in range(n + 1):
+            while st and h[st[-1]] > h[i]:
+                height = h[st.pop()]
+                width = i - st[-1] - 1
+                res = max(res, height * width)
             st += i,
-        
-        st = collections.deque()
-        for i in range(n):
-            while st and A[st[-1]] > A[i]:
-                right[st[-1]] = i - st[-1]
-                st.pop()
-            
-            st += i,
-            
-        res = float('-inf')
-        for i in range(n):
-            res = max(res, A[i] * (left[i] + right[i] - 1))
         
         return res
