@@ -5,8 +5,6 @@ Time complexity: O(n)
 Space complexity: O(n)
 """
 
-import collections
-
 class Solution:
     def largestRectangleArea(self, A):
         if not A:   return 0
