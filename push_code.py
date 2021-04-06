@@ -14,7 +14,7 @@ class PushCode:
     def push_commands(self):
         os.chdir(self.directory['home_dir'])
         commit_msg = sys.argv[1] if len(sys.argv)>1 else 'Minor'
-        branch_name = sys.argv[2] if len(sys.argv)>2 else 'master'
+        branch_name = sys.argv[2] if len(sys.argv)>2 else 'Jan_May'
         push_success = False
         try:
             add_cmd = subprocess.run(["git", "add", "."], capture_output = True)
